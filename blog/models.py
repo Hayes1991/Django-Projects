@@ -21,11 +21,19 @@ class BlogIndexPage(Page):
         context['blogpages'] = blogpages
         return context
 
+class BlogPageTag(TaggedItemBase):
+    content_object = ParentalKey(
+        'BlogPage',
+        related_name='tagged_items',
+        on_delete=models.CASCADE
+    )
+
 class BlogPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
-
+    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
+    
     def main_image(self):
         gallery_item = self.gallery_images.first()
         if gallery_item:
