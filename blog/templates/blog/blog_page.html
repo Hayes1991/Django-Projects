@@ -7,5 +7,11 @@
     <p class="meta" >{{ page.date }}</p>
     <div class="intro">{{ page.intro}}</div>
     {{ page.body|richtext }}
+    {% for item in page.gallery_images.all %}
+        <div style="float: left; margin: 10px">
+            {% image item.image fill-320x240 %}
+            <p>{{ item.caption }}</p>
+        </div>
+    {% endfor %}
     <P><a href="{{page.get_parent.url}}">Return to blog</a></P>
 {% endblock %}
